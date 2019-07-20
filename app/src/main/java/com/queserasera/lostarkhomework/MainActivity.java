@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
     private String characterName;
 
     private Button hwButton;
-    private Button collectButton;
+    private Button mariButton;
     private Button fundButton;
 
     private ImageView leftArrow;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
         mContext = this;
 
         hwButton = (Button) findViewById(R.id.hw_button);
-        collectButton = (Button) findViewById(R.id.collect_button);
+        mariButton = (Button) findViewById(R.id.mari_button);
         fundButton = (Button) findViewById(R.id.fund_button);
 
         leftArrow= (ImageView) findViewById(R.id.left_arrow);
@@ -76,8 +76,11 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
         hwButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { showHW(characterIdx); }
         });
-        collectButton.setOnClickListener(new View.OnClickListener() {
+        /*mariButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { comingSoonToast(); }
+        });*/
+        mariButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { showMari(); }
         });
         leftArrow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { changeCharacter(false); }
@@ -210,6 +213,10 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
     public void showHW(int characterIdx){
         Intent intent = new Intent(getBaseContext(), HWActivity.class);
         intent.putExtra("characterIdx", characterIdx);
+        startActivity(intent);
+    }
+    public void showMari(){
+        Intent intent = new Intent(getBaseContext(), MariActivity.class);
         startActivity(intent);
     }
     public void comingSoonToast(){

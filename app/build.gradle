@@ -6,8 +6,8 @@ android {
         applicationId "com.queserasera.lostarkhomework"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.1.4"
+        versionCode 9
+        versionName "1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -26,6 +26,11 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     //인앱결제 라이브러리
     implementation 'com.anjlab.android.iab.v3:library:1.0.44'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    //jsoup for parsing
+    implementation 'org.jsoup:jsoup:1.11.3'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

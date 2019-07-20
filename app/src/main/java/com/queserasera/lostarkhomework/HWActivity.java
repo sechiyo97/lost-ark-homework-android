@@ -118,7 +118,7 @@ public class HWActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
     public void refreshAlert(final int categoryIdx){
-        String[] categoryText = {"일간", "주간", "레이드"};
+        String[] categoryText = {"일간", "레이드", "주간"};
         new AlertDialog.Builder(this)
                 .setTitle(categoryText[categoryIdx] + " 숙제 초기화")
                 .setMessage("초기화하시겠습니까?")
