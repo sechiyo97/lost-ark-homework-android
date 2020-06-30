@@ -271,7 +271,7 @@
                 android:background="#eeeeee">
             </LinearLayout>
             <!-- 요기까지 -->
-            <android.support.v4.widget.Space
+            <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />

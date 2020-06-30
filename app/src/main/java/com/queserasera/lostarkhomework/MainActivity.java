@@ -1,13 +1,11 @@
 package com.queserasera.lostarkhomework;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,12 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.Constants;
 import com.anjlab.android.iab.v3.SkuDetails;
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
-public class MainActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
+public class MainActivity extends Activity implements BillingProcessor.IBillingHandler {
     private BillingProcessor bp; //결제용 객체
     public static Context mContext;
 
@@ -30,12 +35,13 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
 
     private Button hwButton;
     private Button mariButton;
-    private Button fundButton;
+    //private Button fundButton;
 
     private ImageView leftArrow;
     private ImageView rightArrow;
     private ImageView characterIcon;
     private TextView characterNameView;
+    private AdView mAdViewBottom;
 
     private SharedPreferences appData;
 
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
 
         hwButton = (Button) findViewById(R.id.hw_button);
         mariButton = (Button) findViewById(R.id.mari_button);
-        fundButton = (Button) findViewById(R.id.fund_button);
+        //fundButton = (Button) findViewById(R.id.fund_button);
 
         leftArrow= (ImageView) findViewById(R.id.left_arrow);
         rightArrow= (ImageView) findViewById(R.id.right_arrow);
@@ -94,10 +100,18 @@ public class MainActivity extends AppCompatActivity implements BillingProcessor.
         characterNameView.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){ editNameAlert(); }
         });
-        fundButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){ donateAlert(); }
-        });
         showCharacter(0);
+
+        // 광고 불러오기
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        mAdViewBottom = findViewById(R.id.ad_view_bottom);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdViewBottom.loadAd(adRequest);
     }
 
     // 캐릭터 변경

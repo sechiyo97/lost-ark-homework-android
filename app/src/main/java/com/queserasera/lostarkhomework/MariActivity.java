@@ -2,10 +2,16 @@ package com.queserasera.lostarkhomework;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.v7.app.AppCompatActivity;
+=======
+import android.os.Handler;
+>>>>>>> 0a6a60792696a6b533225b2a7b2ece737003eda1
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 

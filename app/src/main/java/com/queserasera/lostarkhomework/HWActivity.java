@@ -1,23 +1,25 @@
 package com.queserasera.lostarkhomework;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class HWActivity extends AppCompatActivity {
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class HWActivity extends Activity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private SharedPreferences appData;
-    private ImageView reloadButton;
+    private ImageView reloadButtonDaily;
+    private ImageView reloadButtonWeekly;
 
     private int characterIdx;
 
@@ -25,14 +27,14 @@ public class HWActivity extends AppCompatActivity {
     String[][][] mAllHWList = {
             //daily
             {{"에포나","4"},{"카오스 던전","4"}, {"실리안의 지령서","4"},
-                    {"이벤트 카던","1"}, {"보물지도","1"},
+                    {"이벤트 카던","1"}, {"길드출석","1"},
                     {"호감도","1"},{"행운의 기운","1"}},
             //raid
             {{"레이드-1T","4"},{"레이드-2T","4"},{"레이드-3T","4"},
-                    {"레이드-4T","4"},{"레이드-5T","4"},{"레이드-6T","4"}},
+                    {"레이드-4T","4"},{"레이드-5T","4"},{"레이드-6T","4"},{"레이드-7T","4"},{"레이드-8T","4"}},
             //weekly
             {{"주간 에포나","4"},{"주간 레이드-1","4"},{"주간 레이드-2","4"},
-                    {"유령선","1"},{"청새치","1"}},
+                    {"유령선","1"},{"철새치","1"},{"한파인양","1"}},
     };
 
     private LinearLayout[] mCategorySelector = new LinearLayout[mAllHWList.length];
@@ -58,7 +60,8 @@ public class HWActivity extends AppCompatActivity {
         characterIdx = intent.getIntExtra("characterIdx", 0);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        reloadButton = (ImageView) findViewById(R.id.reload_button);
+        reloadButtonDaily = (ImageView) findViewById(R.id.reload_button_daily);
+        reloadButtonWeekly = (ImageView) findViewById(R.id.reload_button_weekly);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -87,9 +90,18 @@ public class HWActivity extends AppCompatActivity {
         for (int i=0;i<3;i++) mCategorySelector[i].setBackgroundColor(this.getResources().getColor(R.color.white));
         mCategorySelector[categoryIdx].setBackgroundColor(this.getResources().getColor(R.color.colorAccent));
 
-        reloadButton.setOnClickListener(new View.OnClickListener() {
+        reloadButtonDaily.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                refreshAlert(categoryIdx);
+                //refreshAlert(categoryIdx); // daily로 변경
+                refreshDailyAlert();
+                loadChecked(categoryIdx);
+            }
+        });
+        reloadButtonWeekly.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //refreshAlert(categoryIdx); // daily로 변경
+                refreshWeeklyAlert();
+                loadChecked(categoryIdx);
             }
         });
 
@@ -132,6 +144,36 @@ public class HWActivity extends AppCompatActivity {
                     }})
                 .show();
     }
+
+    public void refreshDailyAlert(){
+        new AlertDialog.Builder(this)
+                .setTitle("일간, 레이드 숙제 초기화")
+                .setMessage("초기화하시겠습니까?")
+                //.setIcon(android.R.drawable.ic_menu_save)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        hwRefresh_noreloading(0);
+                        hwRefresh_noreloading(1);
+                    }})
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }})
+                .show();
+    }
+    public void refreshWeeklyAlert(){
+        new AlertDialog.Builder(this)
+                .setTitle("주간 숙제 초기화")
+                .setMessage("초기화하시겠습니까?")
+                //.setIcon(android.R.drawable.ic_menu_save)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        hwRefresh_noreloading(2);
+                    }})
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }})
+                .show();
+    }
     public void hwRefresh(int categoryIdx){
         // 설정값 불러오기
         appData = this.getSharedPreferences("appData", MODE_PRIVATE);
@@ -153,5 +195,27 @@ public class HWActivity extends AppCompatActivity {
         // apply, commit 을 안하면 변경된 내용이 저장되지 않음
         editor.apply();
         loadChecked(categoryIdx);
+    }
+
+    public void hwRefresh_noreloading(int categoryIdx){
+        // 설정값 불러오기
+        appData = this.getSharedPreferences("appData", MODE_PRIVATE);
+
+        // SharedPreferences 객체만으론 저장 불가능 Editor 사용
+        SharedPreferences.Editor editor = appData.edit();
+
+        // 저장시킬 이름이 이미 존재하면 덮어씌움
+        for (int pos=0;pos<mAllHWList[categoryIdx].length;pos++){
+            for (int i=0;i<4;i++){
+                editor.putBoolean(
+                        "CHARACTER_"+ String.valueOf(characterIdx) + "_" +
+                                "CHECKED_"+String.valueOf(categoryIdx) + "_" +
+                                String.valueOf(pos)+"_"+String.valueOf(i), false);
+            }
+            // 1.0.1 수정: 새로고침 시 줄긋기 수정 안 되게
+            //editor.putBoolean("DAILY_ENABLED_"+String.valueOf(pos), true);
+        }
+        // apply, commit 을 안하면 변경된 내용이 저장되지 않음
+        editor.apply();
     }
 }
