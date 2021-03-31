@@ -13,10 +13,10 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-6823524961524860~2740219965"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".main.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".SplashActivity"
+        <activity android:name=".splash.SplashActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">

@@ -8,4 +8,11 @@
     <string name="weekly">주간</string>
     <string name="reset_weekly">주간\n초기화</string>
     <string name="reset_daily_and_raid">일간, 레이드\n초기화</string>
+
+    <string name="licence_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAls8fKwHSV9z7cLIgl4jsmKdXQFsTO" +
+            "DzQ93N44hZHTu9OcRg9gJOcFQum3j3EgRG1cd0rCRQ6AQeLReMKLIhttIeuKhrOh7S" +
+            "MW/el3iRzviu3D6xeM7nVWUzjYP3PUMu355mqCaWVlQkcEHiR8QBtOpIvpTLE7BFUb0" +
+            "UTD+9Mdrp4fb78/2KfrFURZ5iRtRfWupJTpY787AMUBmrssYGETH2QkW96uQ9WJNWYj" +
+            "dJOmuPHxno0gHwhikyT+jM83csWiXgw2xDVjQsv2dnagfTrjefJJpuMG0Fo79I2y73Z" +
+            "9Jlfs8ZLTGBFXt4QYY+6ZSGJDR3ZyCcrWuzIKbmNbD0/PwIDAQAB</string>
 </resources>

@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.queserasera.lostarkhomework.R
+import com.queserasera.lostarkhomework.databinding.ActivityMariBinding
 import com.queserasera.lostarkhomework.databinding.ActivityMariBindingImpl
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -19,11 +21,18 @@ class MariActivity : AppCompatActivity() {
     private val mariImage: Array<ImageView?> = arrayOfNulls(6)
     private val mariName: Array<TextView?> = arrayOfNulls(6)
     private val mariPrice: Array<TextView?> = arrayOfNulls(6)
+
+    private var binding: ActivityMariBinding? = null
+    private val viewModel = MariVIewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMariBindingImpl.inflate(layoutInflater)
-        setContentView(binding.root)
-//        reloadButton = findViewById(R.id.reload_button)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_mari)
+        binding?.viewModel = viewModel
+
+        viewModel.event.observe(this){
+
+        }
+
 //        reloadButton!!.setOnClickListener { loadMari() }
 //        loadMari()
     }
