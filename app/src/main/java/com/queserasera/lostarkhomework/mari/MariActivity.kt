@@ -1,4 +1,4 @@
-package com.queserasera.lostarkhomework
+package com.queserasera.lostarkhomework.mari
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.queserasera.lostarkhomework.R
+import com.queserasera.lostarkhomework.databinding.ActivityMariBindingImpl
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
@@ -19,28 +21,11 @@ class MariActivity : AppCompatActivity() {
     private val mariPrice: Array<TextView?> = arrayOfNulls(6)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mari)
-        mariImage[0] = findViewById(R.id.mari_image_0)
-        mariImage[1] = findViewById(R.id.mari_image_1)
-        mariImage[2] = findViewById(R.id.mari_image_2)
-        mariImage[3] = findViewById(R.id.mari_image_3)
-        mariImage[4] = findViewById(R.id.mari_image_4)
-        mariImage[5] = findViewById(R.id.mari_image_5)
-        mariName[0] = findViewById(R.id.mari_name_0)
-        mariName[1] = findViewById(R.id.mari_name_1)
-        mariName[2] = findViewById(R.id.mari_name_2)
-        mariName[3] = findViewById(R.id.mari_name_3)
-        mariName[4] = findViewById(R.id.mari_name_4)
-        mariName[5] = findViewById(R.id.mari_name_5)
-        mariPrice[0] = findViewById(R.id.mari_price_0)
-        mariPrice[1] = findViewById(R.id.mari_price_1)
-        mariPrice[2] = findViewById(R.id.mari_price_2)
-        mariPrice[3] = findViewById(R.id.mari_price_3)
-        mariPrice[4] = findViewById(R.id.mari_price_4)
-        mariPrice[5] = findViewById(R.id.mari_price_5)
-        reloadButton = findViewById(R.id.reload_button)
-        reloadButton!!.setOnClickListener { loadMari() }
-        loadMari()
+        val binding = ActivityMariBindingImpl.inflate(layoutInflater)
+        setContentView(binding.root)
+//        reloadButton = findViewById(R.id.reload_button)
+//        reloadButton!!.setOnClickListener { loadMari() }
+//        loadMari()
     }
 
     // 웹에서 마리 정보 가져와 띄우기

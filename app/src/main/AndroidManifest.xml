@@ -15,28 +15,22 @@
             android:value="ca-app-pub-6823524961524860~2740219965"/>
         <activity android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".SplashActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SplashActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/BrownTheme">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HWActivity"
+        <activity android:name=".homework.HomeworkActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".MariActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".EditNameActivity"
+        <activity android:name=".mari.MariActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
         </activity>

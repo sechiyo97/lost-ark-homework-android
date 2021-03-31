@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -19,6 +20,9 @@ import com.anjlab.android.iab.v3.TransactionDetails
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.queserasera.lostarkhomework.databinding.ActivityMainBinding
+import com.queserasera.lostarkhomework.homework.HomeworkActivity
+import com.queserasera.lostarkhomework.mari.MariActivity
 
 class MainActivity : Activity(), IBillingHandler {
     private var bp //결제용 객체
@@ -44,32 +48,32 @@ class MainActivity : Activity(), IBillingHandler {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        mContext = this
-        hwButton = findViewById<View>(R.id.hw_button) as Button
-        mariButton = findViewById<View>(R.id.mari_button) as Button
-        //fundButton = (Button) findViewById(R.id.fund_button);
-        leftArrow = findViewById<View>(R.id.left_arrow) as ImageView
-        rightArrow = findViewById<View>(R.id.right_arrow) as ImageView
-        characterIcon = findViewById<View>(R.id.character_icon) as ImageView
-        characterNameView = findViewById<View>(R.id.character_name) as TextView
+        val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // 설정값 불러오기
-        appData = getSharedPreferences("appData", MODE_PRIVATE)
-        bp = BillingProcessor(this, licenseKey, this)
-        bp!!.initialize()
-        hwButton!!.setOnClickListener { showHW(characterIdx) }
+        binding.arkHomeworkButton.setOnClickListener { showHomework(0) }
+        binding.arkMariButton.setOnClickListener { showMari() }
 
-        mariButton!!.setOnClickListener { showMari() }
-        leftArrow!!.setOnClickListener { changeCharacter(false) }
-        rightArrow!!.setOnClickListener { changeCharacter(true) }
-        characterIcon!!.setOnClickListener { editNameAlert() }
-        characterNameView!!.setOnClickListener { editNameAlert() }
-        showCharacter(0)
+//        mContext = this
+//        hwButton = findViewById<View>(R.id.ark_homework_button) as Button
+//        mariButton = findViewById<View>(R.id.ark_mari_button) as Button
+//
+//        // 설정값 불러오기
+//        appData = getSharedPreferences("appData", MODE_PRIVATE)
+//        bp = BillingProcessor(this, licenseKey, this)
+//        bp!!.initialize()
+//        hwButton!!.setOnClickListener { showHW(characterIdx) }
+//
+//        mariButton!!.setOnClickListener { showMari() }
+//        leftArrow!!.setOnClickListener { changeCharacter(false) }
+//        rightArrow!!.setOnClickListener { changeCharacter(true) }
+//        characterIcon!!.setOnClickListener { editNameAlert() }
+//        characterNameView!!.setOnClickListener { editNameAlert() }
+//        showCharacter(0)
 
         // 광고 불러오기
         MobileAds.initialize(this) { }
-        mAdViewBottom = findViewById(R.id.ad_view_bottom)
+        mAdViewBottom = findViewById(R.id.ark_ad_view_bottom)
         val adRequest = AdRequest.Builder().build()
         mAdViewBottom?.loadAd(adRequest)
     }
@@ -81,7 +85,6 @@ class MainActivity : Activity(), IBillingHandler {
     }
 
     fun showCharacter(characterIdx: Int) {
-        characterIcon!!.setImageResource(iconList[characterIdx])
         characterName = appData!!.getString("CHARACTER_IDX_$characterIdx", "이름없음")
         characterNameView!!.text = characterName
     }
@@ -95,11 +98,8 @@ class MainActivity : Activity(), IBillingHandler {
                 .show()
     }
 
-    private fun editName() {
-        val intent = Intent(baseContext, EditNameActivity::class.java)
-        intent.putExtra("characterIdx", characterIdx)
-        startActivity(intent)
-    }
+    private fun editName() =
+        Toast.makeText(this, "Testing...", Toast.LENGTH_SHORT).show()
 
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
         // * 구매 완료시 호출
@@ -150,8 +150,8 @@ class MainActivity : Activity(), IBillingHandler {
         }
     }
 
-    private fun showHW(characterIdx: Int) {
-        val intent = Intent(baseContext, HWActivity::class.java)
+    private fun showHomework(characterIdx: Int) {
+        val intent = Intent(baseContext, HomeworkActivity::class.java)
         intent.putExtra("characterIdx", characterIdx)
         startActivity(intent)
     }
@@ -159,12 +159,5 @@ class MainActivity : Activity(), IBillingHandler {
     private fun showMari() {
         val intent = Intent(baseContext, MariActivity::class.java)
         startActivity(intent)
-    }
-
-    companion object {
-        var mContext: Context? = null
-        val iconList = intArrayOf(
-                R.drawable.character0, R.drawable.character1, R.drawable.character2,
-                R.drawable.character3, R.drawable.character4, R.drawable.character5)
     }
 }

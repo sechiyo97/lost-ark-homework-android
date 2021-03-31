@@ -1,4 +1,4 @@
-package com.queserasera.lostarkhomework
+package com.queserasera.lostarkhomework.homework
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -9,8 +9,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.queserasera.lostarkhomework.R
+import com.queserasera.lostarkhomework.databinding.ActivityHomeworkBinding
 
-class HWActivity : Activity() {
+class HomeworkActivity : Activity() {
     private var recyclerView: RecyclerView? = null
     private var mAdapter: RecyclerView.Adapter<*>? = null
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -29,35 +31,31 @@ class HWActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hw)
-        val intent = intent
-        characterIdx = intent.getIntExtra("characterIdx", 0)
-        recyclerView = findViewById<View>(R.id.recycler_view) as RecyclerView
-        reloadButtonDaily = findViewById<View>(R.id.reload_button_daily) as ImageView
-        reloadButtonWeekly = findViewById<View>(R.id.reload_button_weekly) as ImageView
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView!!.setHasFixedSize(true)
-
-        // use a linear layout manager
-        layoutManager = LinearLayoutManager(this)
-        recyclerView!!.layoutManager = layoutManager
-
-        // set select buttons
-        mCategorySelector[0] = findViewById<View>(R.id.daily_select) as LinearLayout
-        mCategorySelector[1] = findViewById<View>(R.id.weekly_select) as LinearLayout
-        mCategorySelector[2] = findViewById<View>(R.id.passive_select) as LinearLayout
-        for (i in mAllHWList.indices) {
-            val idx: Int = i
-            mCategorySelector[i]?.setOnClickListener { categorySelect(idx) }
-        }
-        categorySelect(0)
+        val binding = ActivityHomeworkBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+//        val intent = intent
+//        characterIdx = intent.getIntExtra("characterIdx", 0)
+//        reloadButtonDaily = findViewById<View>(R.id.reload_button_daily) as ImageView
+//        reloadButtonWeekly = findViewById<View>(R.id.reload_button_weekly) as ImageView
+//
+//        // use this setting to improve performance if you know that changes
+//        // in content do not change the layout size of the RecyclerView
+//        recyclerView!!.setHasFixedSize(true)
+//
+//        // use a linear layout manager
+//        layoutManager = LinearLayoutManager(this)
+//        recyclerView!!.layoutManager = layoutManager
+//
+//        // set select buttons        for (i in mAllHWList.indices) {
+//            val idx: Int = i
+//            mCategorySelector[i]?.setOnClickListener { categorySelect(idx) }
+//        }
+//        categorySelect(0)
     }
 
     private fun categorySelect(categoryIdx: Int) {
-        for (i in 0..2) mCategorySelector[i]!!.setBackgroundColor(this.resources.getColor(R.color.white))
-        mCategorySelector[categoryIdx]!!.setBackgroundColor(this.resources.getColor(R.color.colorAccent))
+        /*for (i in 0..2) mCategorySelector[i]!!.setBackgroundColor(this.resources.getColor(R.color.white))
+        mCategorySelector[categoryIdx]!!.setBackgroundColor(this.resources.getColor(R.color.dark_gray))
         reloadButtonDaily!!.setOnClickListener { //refreshAlert(categoryIdx); // daily로 변경
             refreshDailyAlert()
             loadChecked(categoryIdx)
@@ -66,7 +64,7 @@ class HWActivity : Activity() {
             refreshWeeklyAlert()
             loadChecked(categoryIdx)
         }
-        loadChecked(categoryIdx)
+        loadChecked(categoryIdx)*/
     }
 
     private fun loadChecked(categoryIdx: Int) {

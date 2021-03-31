@@ -7,7 +7,6 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity() {
-    private var handler = Handler(mainLooper)
     private var appData: SharedPreferences? = null
 
     /** Called when the activity is first created.  */
@@ -17,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
         // 설정값 불러오기
         appData = getSharedPreferences("appData", MODE_PRIVATE)
-        handler.postDelayed({ showMain() }, 1000)
+        Handler(mainLooper).postDelayed({ showMain() }, 1000)
     }
 
     private fun showMain() {
