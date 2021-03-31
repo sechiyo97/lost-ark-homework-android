@@ -1,13 +1,13 @@
 package com.queserasera.lostarkhomework
 
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 
-class SplashActivity : Activity() {
-    var handler = Handler()
+class SplashActivity : AppCompatActivity() {
+    private var handler = Handler(mainLooper)
     private var appData: SharedPreferences? = null
 
     /** Called when the activity is first created.  */

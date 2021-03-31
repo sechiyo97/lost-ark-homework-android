@@ -59,9 +59,8 @@ class MainActivity : Activity(), IBillingHandler {
         bp = BillingProcessor(this, licenseKey, this)
         bp!!.initialize()
         hwButton!!.setOnClickListener { showHW(characterIdx) }
-        /*mariButton.setOnClickListener(new View.OnClickListener() {
-    public void onClick(View v) { comingSoonToast(); }
-});*/mariButton!!.setOnClickListener { showMari() }
+
+        mariButton!!.setOnClickListener { showMari() }
         leftArrow!!.setOnClickListener { changeCharacter(false) }
         rightArrow!!.setOnClickListener { changeCharacter(true) }
         characterIcon!!.setOnClickListener { editNameAlert() }
@@ -76,7 +75,7 @@ class MainActivity : Activity(), IBillingHandler {
     }
 
     // 캐릭터 변경
-    fun changeCharacter(nextOne: Boolean) {
+    private fun changeCharacter(nextOne: Boolean) {
         characterIdx = if (nextOne) (characterIdx + 1) % 6 else if (characterIdx != 0) (characterIdx - 1) % 6 else 5
         showCharacter(characterIdx)
     }
@@ -87,37 +86,19 @@ class MainActivity : Activity(), IBillingHandler {
         characterNameView!!.text = characterName
     }
 
-    fun editNameAlert() {
+    private fun editNameAlert() {
         AlertDialog.Builder(this)
                 .setTitle("캐릭터 이름 변경")
                 .setMessage("캐릭터 이름을 변경하시겠습니까?")
-                .setPositiveButton(android.R.string.yes) { dialog, whichButton -> editName() }
-                .setNegativeButton(android.R.string.no) { dialog, whichButton -> }
+                .setPositiveButton("확인") { _, _ -> editName() }
+                .setNegativeButton("취소") { _, _ -> }
                 .show()
     }
 
-    fun editName() {
+    private fun editName() {
         val intent = Intent(baseContext, EditNameActivity::class.java)
         intent.putExtra("characterIdx", characterIdx)
         startActivity(intent)
-    }
-
-    // 결제 관련
-    fun donateAlert() {
-        AlertDialog.Builder(this)
-                .setTitle("★ 개발자에게 후원하기 ★")
-                .setMessage("""
-    이용해 주셔서 감사합니다!
-    로스트아크: 숙제했니?는 한 대학생 나부랭이가 열심히 앱개발을 공부하며 만든 앱입니다.
-    고생한 대학생에게 클라우드 한 캔만 사 주시면 감사하겠습니다... :D
-    """.trimIndent())
-                .setPositiveButton(android.R.string.yes) { dialog, whichButton -> donate() }
-                .setNegativeButton(android.R.string.no) { dialog, whichButton -> }
-                .show()
-    }
-
-    fun donate() {
-        bp!!.purchase(this, "donate")
     }
 
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
@@ -169,19 +150,15 @@ class MainActivity : Activity(), IBillingHandler {
         }
     }
 
-    fun showHW(characterIdx: Int) {
+    private fun showHW(characterIdx: Int) {
         val intent = Intent(baseContext, HWActivity::class.java)
         intent.putExtra("characterIdx", characterIdx)
         startActivity(intent)
     }
 
-    fun showMari() {
+    private fun showMari() {
         val intent = Intent(baseContext, MariActivity::class.java)
         startActivity(intent)
-    }
-
-    fun comingSoonToast() {
-        Toast.makeText(applicationContext, "준비 중인 기능입니다.", Toast.LENGTH_LONG).show()
     }
 
     companion object {

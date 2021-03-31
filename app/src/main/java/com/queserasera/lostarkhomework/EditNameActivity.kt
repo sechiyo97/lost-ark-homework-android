@@ -1,9 +1,7 @@
 package com.queserasera.lostarkhomework
 
-import android.app.Activity
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -41,9 +39,7 @@ class EditNameActivity : AppCompatActivity() {
         mNameDisplay!!.setText(characterName)
     }
 
-    fun showMain() {
-        finish()
-    }
+    private fun showMain() = finish()
 
     // 설정값을 저장하는 함수
     private fun save() {

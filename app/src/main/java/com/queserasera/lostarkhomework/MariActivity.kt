@@ -20,31 +20,31 @@ class MariActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mari)
-        mariImage[0] = findViewById(R.id.mari_image_0) as ImageView
-        mariImage[1] = findViewById(R.id.mari_image_1) as ImageView
-        mariImage[2] = findViewById(R.id.mari_image_2) as ImageView
-        mariImage[3] = findViewById(R.id.mari_image_3) as ImageView
-        mariImage[4] = findViewById(R.id.mari_image_4) as ImageView
-        mariImage[5] = findViewById(R.id.mari_image_5) as ImageView
-        mariName[0] = findViewById(R.id.mari_name_0) as TextView
-        mariName[1] = findViewById(R.id.mari_name_1) as TextView
-        mariName[2] = findViewById(R.id.mari_name_2) as TextView
-        mariName[3] = findViewById(R.id.mari_name_3) as TextView
-        mariName[4] = findViewById(R.id.mari_name_4) as TextView
-        mariName[5] = findViewById(R.id.mari_name_5) as TextView
-        mariPrice[0] = findViewById(R.id.mari_price_0) as TextView
-        mariPrice[1] = findViewById(R.id.mari_price_1) as TextView
-        mariPrice[2] = findViewById(R.id.mari_price_2) as TextView
-        mariPrice[3] = findViewById(R.id.mari_price_3) as TextView
-        mariPrice[4] = findViewById(R.id.mari_price_4) as TextView
-        mariPrice[5] = findViewById(R.id.mari_price_5) as TextView
-        reloadButton = findViewById(R.id.reload_button) as ImageView?
+        mariImage[0] = findViewById(R.id.mari_image_0)
+        mariImage[1] = findViewById(R.id.mari_image_1)
+        mariImage[2] = findViewById(R.id.mari_image_2)
+        mariImage[3] = findViewById(R.id.mari_image_3)
+        mariImage[4] = findViewById(R.id.mari_image_4)
+        mariImage[5] = findViewById(R.id.mari_image_5)
+        mariName[0] = findViewById(R.id.mari_name_0)
+        mariName[1] = findViewById(R.id.mari_name_1)
+        mariName[2] = findViewById(R.id.mari_name_2)
+        mariName[3] = findViewById(R.id.mari_name_3)
+        mariName[4] = findViewById(R.id.mari_name_4)
+        mariName[5] = findViewById(R.id.mari_name_5)
+        mariPrice[0] = findViewById(R.id.mari_price_0)
+        mariPrice[1] = findViewById(R.id.mari_price_1)
+        mariPrice[2] = findViewById(R.id.mari_price_2)
+        mariPrice[3] = findViewById(R.id.mari_price_3)
+        mariPrice[4] = findViewById(R.id.mari_price_4)
+        mariPrice[5] = findViewById(R.id.mari_price_5)
+        reloadButton = findViewById(R.id.reload_button)
         reloadButton!!.setOnClickListener { loadMari() }
         loadMari()
     }
 
     // 웹에서 마리 정보 가져와 띄우기
-    fun loadMari() {
+    private fun loadMari() {
         val parseThread: Thread = object : Thread() {
             override fun run() {
                 val url = "https://lostark.game.onstove.com/Shop/Mari"
@@ -75,9 +75,5 @@ class MariActivity : AppCompatActivity() {
 
         // 이미지 로딩
         for (i in 0..5) mariImage[i]?.let { Glide.with(this).load(mariImageURL[i]).into(it) }
-    }
-
-    companion object {
-        const val sampleURL = "https://cdn-lostark.game.onstove.com/uploadfiles/tooltip/82fba916b31d449dbae5abe9c7f7fc86.png"
     }
 }

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="캐릭터 이름 변경"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textAlignment="center" />
     <Space
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="변경하실 닉네임을 입력해 주세요."
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textAlignment="center"/>
 
     <Space
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text='닉네임: '
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:layout_gravity="center"/>
 
         <EditText
@@ -55,7 +55,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="6"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textAlignment="center"
             android:text="이름없음"  />
         <Space
@@ -84,7 +84,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="#ffffff"
             android:backgroundTint="@color/colorAccent"
             android:text="완료"  />
