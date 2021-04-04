@@ -18,7 +18,7 @@
         <LinearLayout
             android:id="@+id/ark_homework_tab"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/title_bar_height"
             android:background="@color/dark_gray"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"

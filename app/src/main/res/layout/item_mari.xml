@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="name"
+            type="String" />
+        <variable
+            name="price"
+            type="Integer" />
+        <variable
+            name="imageSrc"
+            type="String" />
+        <variable
+            name="selectedTab"
+            type="Integer" />
+    </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -10,15 +24,16 @@
         <ImageView
             android:id="@+id/ark_mari_image"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            imageSrc="@{imageSrc}"/>
         <TextView
             android:id="@+id/ark_mari_name"
             android:textSize="12sp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
             android:gravity="center|start"
-            android:text="아이템 이름"/>
+            android:text="@{name != null ? name : @string/default_mari_item_name}"/>
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -28,8 +43,8 @@
             android:textSize="12sp"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:gravity="center|start"
-            android:text="0"/>
+            android:text="@{Integer.toString(price != null ? price : 0)}"/>
     </LinearLayout>
 </layout>
