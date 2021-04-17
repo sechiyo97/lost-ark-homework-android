@@ -1,11 +1,8 @@
 package com.queserasera.lostarkhomework.homework
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,28 +14,27 @@ import com.queserasera.lostarkhomework.R
 import com.queserasera.lostarkhomework.databinding.ActivityHomeworkBinding
 
 class HomeworkActivity : AppCompatActivity() {
-    private var recyclerView: RecyclerView? = null
-    private var mAdapter: RecyclerView.Adapter<*>? = null
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var appData: SharedPreferences? = null
-    private var reloadButtonDaily: ImageView? = null
-    private var reloadButtonWeekly: ImageView? = null
-    private var characterIdx = 0
+    private var binding: ActivityHomeworkBinding? = null
+    private val viewModel = HomeworkViewModel()
 
+    // TODO: 변수 개편
+    private var adapter: RecyclerView.Adapter<*>? = null
     // dataset: {name, total, current, enabled}
     private var mAllHWList = arrayOf(arrayOf(arrayOf("에포나", "4"), arrayOf("카오스 던전", "4"), arrayOf("실리안의 지령서", "4"), arrayOf("이벤트 카던", "1"), arrayOf("길드출석", "1"), arrayOf("호감도", "1"), arrayOf("행운의 기운", "1")), arrayOf(arrayOf("레이드-1T", "4"), arrayOf("레이드-2T", "4"), arrayOf("레이드-3T", "4"), arrayOf("레이드-4T", "4"), arrayOf("레이드-5T", "4"), arrayOf("레이드-6T", "4"), arrayOf("레이드-7T", "4"), arrayOf("레이드-8T", "4")), arrayOf(arrayOf("주간 에포나", "4"), arrayOf("주간 레이드-1", "4"), arrayOf("주간 레이드-2", "4"), arrayOf("유령선", "1"), arrayOf("철새치", "1"), arrayOf("한파인양", "1")))
     private val mCategorySelector: Array<LinearLayout?> = arrayOfNulls(mAllHWList.size)
-
     // dataset
     private var mAllEnabledData = arrayOf(BooleanArray(mAllHWList[0].size), BooleanArray(mAllHWList[1].size), BooleanArray(mAllHWList[2].size))
     private var mAllCheckedData = arrayOf(Array(mAllHWList[0].size) { BooleanArray(4) }, Array(mAllHWList[1].size) { BooleanArray(4) }, Array(mAllHWList[2].size) { BooleanArray(4) })
 
-    private var binding: ActivityHomeworkBinding? = null
-    private val viewModel = HomeworkViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_homework)
         binding?.viewModel = viewModel
+
+        binding?.apply{
+
+            arkHomeworkList.layoutManager = LinearLayoutManager(this@HomeworkActivity)
+        }
 
         viewModel.event.observe(this, Observer<Event>{
 
@@ -78,7 +74,7 @@ class HomeworkActivity : AppCompatActivity() {
     }
 
     private fun loadChecked(categoryIdx: Int) {
-        // 설정값 불러오기
+       /* // 설정값 불러오기
         appData = getSharedPreferences("appData", MODE_PRIVATE)
         for (pos in mAllHWList[categoryIdx].indices) {
             for (i in 0..3) {
@@ -91,9 +87,9 @@ class HomeworkActivity : AppCompatActivity() {
                             "ENABLED_" + categoryIdx.toString() + "_" + pos.toString()), true)
         }
         // specify an adapter (see also next example)
-        mAdapter = MyHWAdapter(characterIdx, categoryIdx,
+        adapter = MyHWAdapter(characterIdx, categoryIdx,
                 mAllHWList[categoryIdx], mAllCheckedData[categoryIdx], mAllEnabledData[categoryIdx])
-        recyclerView!!.adapter = mAdapter
+        binding?.arkHomeworkList?.adapter = adapter*/
     }
 
     private fun refreshDailyAlert() {
@@ -119,7 +115,7 @@ class HomeworkActivity : AppCompatActivity() {
 
     private fun hwRefreshWithoutReload(categoryIdx: Int) {
         // 설정값 불러오기
-        appData = getSharedPreferences("appData", MODE_PRIVATE)
+       /* appData = getSharedPreferences("appData", MODE_PRIVATE)
 
         // SharedPreferences 객체만으론 저장 불가능 Editor 사용
         val editor = appData!!.edit()
@@ -135,6 +131,6 @@ class HomeworkActivity : AppCompatActivity() {
             //editor.putBoolean("DAILY_ENABLED_"+String.valueOf(pos), true);
         }
         // apply, commit 을 안하면 변경된 내용이 저장되지 않음
-        editor.apply()
+        editor.apply()*/
     }
 }
