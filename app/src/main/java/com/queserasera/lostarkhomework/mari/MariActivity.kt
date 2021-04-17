@@ -3,7 +3,9 @@ package com.queserasera.lostarkhomework.mari
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.queserasera.lostarkhomework.Event
 import com.queserasera.lostarkhomework.R
 import com.queserasera.lostarkhomework.databinding.ActivityMariBinding
 import com.queserasera.lostarkhomework.mari.event.OnMariLoaded
@@ -24,7 +26,7 @@ class MariActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.event.observe(this){
+        viewModel.event.observe(this, Observer<Event>{
             when(it) {
                 OnMariLoaded -> {
                     mariAdapter.mariSet = viewModel.mariItemSet
@@ -38,7 +40,7 @@ class MariActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
+        })
 
         viewModel.loadMari()
         viewModel.setTab(0)

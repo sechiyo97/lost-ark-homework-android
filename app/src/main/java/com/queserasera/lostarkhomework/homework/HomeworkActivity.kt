@@ -9,8 +9,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.queserasera.lostarkhomework.Event
 import com.queserasera.lostarkhomework.R
 import com.queserasera.lostarkhomework.databinding.ActivityHomeworkBinding
 
@@ -38,9 +40,9 @@ class HomeworkActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_homework)
         binding?.viewModel = viewModel
 
-        viewModel.event.observe(this){
+        viewModel.event.observe(this, Observer<Event>{
 
-        }
+        })
 //        val intent = intent
 //        characterIdx = intent.getIntExtra("characterIdx", 0)
 //        reloadButtonDaily = findViewById<View>(R.id.reload_button_daily) as ImageView

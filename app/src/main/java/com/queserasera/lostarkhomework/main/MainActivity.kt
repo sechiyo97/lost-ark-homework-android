@@ -20,6 +20,7 @@ import com.anjlab.android.iab.v3.TransactionDetails
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.queserasera.lostarkhomework.Event
 import com.queserasera.lostarkhomework.R
 import com.queserasera.lostarkhomework.databinding.ActivityMainBinding
 import com.queserasera.lostarkhomework.homework.HomeworkActivity
@@ -55,12 +56,12 @@ class MainActivity : AppCompatActivity(), IBillingHandler {
     }
 
     private fun initViewModel() {
-        viewModel.event.observe(this){
+        viewModel.event.observe(this, Observer<Event>{
             when(it) {
                 OnMariClicked -> showMari()
                 OnHomeworkClicked -> showHomework(0)
             }
-        }
+        })
     }
 
     private fun initAd(){
