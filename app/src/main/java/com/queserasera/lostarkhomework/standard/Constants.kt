@@ -1,3 +1,3 @@
 package com.queserasera.lostarkhomework.standard
 
-const val CHARACTER_NAME = "CHARACTER_NAME"
+const val GAME_CHARACTER = "GAME_CHARACTER"

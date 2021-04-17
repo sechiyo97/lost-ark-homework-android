@@ -1,9 +1,9 @@
 package com.queserasera.lostarkhomework.homework
 
 import android.app.AlertDialog
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -11,7 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.queserasera.lostarkhomework.Event
 import com.queserasera.lostarkhomework.R
+import com.queserasera.lostarkhomework.common.GameCharacter
 import com.queserasera.lostarkhomework.databinding.ActivityHomeworkBinding
+import com.queserasera.lostarkhomework.homework.event.OnResetDailyClicked
+import com.queserasera.lostarkhomework.homework.event.OnResetWeeklyClicked
+import com.queserasera.lostarkhomework.main.event.OnHomeworkLoaded
+import com.queserasera.lostarkhomework.mari.event.OnTabChanged
+import com.queserasera.lostarkhomework.standard.GAME_CHARACTER
 
 class HomeworkActivity : AppCompatActivity() {
     private var binding: ActivityHomeworkBinding? = null
@@ -31,46 +37,62 @@ class HomeworkActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_homework)
         binding?.viewModel = viewModel
 
-        binding?.apply{
-
-            arkHomeworkList.layoutManager = LinearLayoutManager(this@HomeworkActivity)
+        binding?.arkHomeworkList?.apply{
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@HomeworkActivity)
         }
+
+        val character = intent.getSerializableExtra(GAME_CHARACTER) as? GameCharacter ?: GameCharacter("", 0)
 
         viewModel.event.observe(this, Observer<Event>{
-
+            when(it) {
+                OnResetDailyClicked -> {
+                    askResetDailyHomework {
+                        viewModel.resetDailyHomework(character)
+                    }
+                }
+                OnResetWeeklyClicked -> {
+                    askResetWeeklyHomework {
+                        viewModel.resetWeeklyHomework(character)
+                    }
+                }
+                OnHomeworkLoaded -> {
+                    Toast.makeText(this, "OnHomeworkLoaded", Toast.LENGTH_SHORT).show()
+                }
+                is OnTabChanged -> {
+                    if (binding?.selectedTab != it.index) {
+                        binding?.selectedTab = it.index
+                    }
+                }
+            }
         })
-//        val intent = intent
-//        characterIdx = intent.getIntExtra("characterIdx", 0)
-//        reloadButtonDaily = findViewById<View>(R.id.reload_button_daily) as ImageView
-//        reloadButtonWeekly = findViewById<View>(R.id.reload_button_weekly) as ImageView
-//
-//        // use this setting to improve performance if you know that changes
-//        // in content do not change the layout size of the RecyclerView
-//        recyclerView!!.setHasFixedSize(true)
-//
-//        // use a linear layout manager
-//        layoutManager = LinearLayoutManager(this)
-//        recyclerView!!.layoutManager = layoutManager
-//
-//        // set select buttons        for (i in mAllHWList.indices) {
-//            val idx: Int = i
-//            mCategorySelector[i]?.setOnClickListener { categorySelect(idx) }
-//        }
-//        categorySelect(0)
+
+        (character as? GameCharacter)?.let {
+            viewModel.loadHomework(it)
+            viewModel.setTab(0)
+        }
     }
 
-    private fun categorySelect(categoryIdx: Int) {
-        /*for (i in 0..2) mCategorySelector[i]!!.setBackgroundColor(this.resources.getColor(R.color.white))
-        mCategorySelector[categoryIdx]!!.setBackgroundColor(this.resources.getColor(R.color.dark_gray))
-        reloadButtonDaily!!.setOnClickListener { //refreshAlert(categoryIdx); // daily로 변경
-            refreshDailyAlert()
-            loadChecked(categoryIdx)
-        }
-        reloadButtonWeekly!!.setOnClickListener { //refreshAlert(categoryIdx); // daily로 변경
-            refreshWeeklyAlert()
-            loadChecked(categoryIdx)
-        }
-        loadChecked(categoryIdx)*/
+    private fun askResetDailyHomework(onConfirmed: () -> Unit) {
+        AlertDialog.Builder(this)
+                .setTitle("일간 숙제 초기화")
+                .setMessage("초기화하시겠습니까?")
+                .setPositiveButton(R.string.confirm) { _, _ ->
+                    onConfirmed.invoke()
+                }
+                .setNegativeButton(R.string.cancel) { _, _ -> }
+                .show()
+    }
+
+    private fun askResetWeeklyHomework(onConfirmed: () -> Unit) {
+        AlertDialog.Builder(this)
+            .setTitle("주간 숙제 초기화")
+            .setMessage("초기화하시겠습니까?")
+            .setPositiveButton(R.string.confirm) { _, _ ->
+                onConfirmed.invoke()
+            }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
+            .show()
     }
 
     private fun loadChecked(categoryIdx: Int) {
@@ -90,27 +112,6 @@ class HomeworkActivity : AppCompatActivity() {
         adapter = MyHWAdapter(characterIdx, categoryIdx,
                 mAllHWList[categoryIdx], mAllCheckedData[categoryIdx], mAllEnabledData[categoryIdx])
         binding?.arkHomeworkList?.adapter = adapter*/
-    }
-
-    private fun refreshDailyAlert() {
-        AlertDialog.Builder(this)
-                .setTitle("일간, 레이드 숙제 초기화")
-                .setMessage("초기화하시겠습니까?") //.setIcon(android.R.drawable.ic_menu_save)
-                .setPositiveButton(android.R.string.yes) { dialog, whichButton ->
-                    hwRefreshWithoutReload(0)
-                    hwRefreshWithoutReload(1)
-                }
-                .setNegativeButton(android.R.string.no) { dialog, whichButton -> }
-                .show()
-    }
-
-    private fun refreshWeeklyAlert() {
-        AlertDialog.Builder(this)
-                .setTitle("주간 숙제 초기화")
-                .setMessage("초기화하시겠습니까?") //.setIcon(android.R.drawable.ic_menu_save)
-                .setPositiveButton(android.R.string.yes) { dialog, whichButton -> hwRefreshWithoutReload(2) }
-                .setNegativeButton(android.R.string.no) { dialog, whichButton -> }
-                .show()
     }
 
     private fun hwRefreshWithoutReload(categoryIdx: Int) {

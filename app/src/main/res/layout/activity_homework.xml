@@ -2,6 +2,9 @@
 <layout>
     <data>
         <variable
+            name="selectedTab"
+            type="Integer" />
+        <variable
             name="viewModel"
             type="com.queserasera.lostarkhomework.homework.HomeworkViewModel" />
     </data>
@@ -19,88 +22,55 @@
             android:id="@+id/ark_homework_tab"
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
-            android:background="@color/dark_gray"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:baselineAligned="false">
-            <!-- menu 1: 일간 -->
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@color/dark_gray"
-                android:paddingBottom="3dp"
-                android:layout_weight="1">
-                <LinearLayout
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:onClick="@{() -> viewModel.onTabClicked(0)}">
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="@string/daily"
-                        android:paddingBottom="10dp"
-                        android:textSize="18sp"
-                        android:layout_gravity="bottom|center_horizontal"/>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="@string/homework_daily"
+                    android:paddingBottom="10dp"
+                    android:textSize="18sp"
+                    android:layout_gravity="bottom|center_horizontal"/>
                 <View
+                    goneUnless="@{selectedTab == 0}"
+                    android:background="@color/dark_gray"
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"/>
-            </LinearLayout>
-            <!-- menu 2: 레이드 -->
-            <LinearLayout
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom"/>
+            </FrameLayout>
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="@color/white"
-                android:paddingBottom="3dp"
-                android:layout_weight="1">
-                <LinearLayout
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onTabClicked(1)}">
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="@string/raid"
-                        android:paddingBottom="10dp"
-                        android:textSize="18sp"
-                        android:layout_gravity="bottom|center_horizontal"/>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="@string/homework_weekly"
+                    android:paddingBottom="10dp"
+                    android:textSize="18sp"
+                    android:layout_gravity="bottom|center_horizontal"/>
                 <View
+                    goneUnless="@{selectedTab == 1}"
+                    android:background="@color/dark_gray"
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"/>
-            </LinearLayout>
-
-            <!-- menu 3: 주간 -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:paddingBottom="3dp"
-                android:layout_weight="1">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:text="@string/weekly"
-                        android:paddingBottom="10dp"
-                        android:textSize="18sp"
-                        android:layout_gravity="bottom|center_horizontal"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"/>
-            </LinearLayout>
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom"/>
+            </FrameLayout>
         </LinearLayout>
 
         <View
@@ -146,7 +116,8 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/reload_icon"/>
+                    android:src="@drawable/reload_icon"
+                    android:onClick="@{viewModel::onResetDailyClicked}"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -176,7 +147,8 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
-                    android:src="@drawable/reload_icon"/>
+                    android:src="@drawable/reload_icon"
+                    android:onClick="@{viewModel::onResetWeeklyClicked}"/>
             </LinearLayout>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

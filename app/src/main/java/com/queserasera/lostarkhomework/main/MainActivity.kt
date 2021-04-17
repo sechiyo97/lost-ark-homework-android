@@ -17,7 +17,7 @@ import com.queserasera.lostarkhomework.homework.HomeworkActivity
 import com.queserasera.lostarkhomework.main.event.OnHomeworkClicked
 import com.queserasera.lostarkhomework.main.event.OnMariClicked
 import com.queserasera.lostarkhomework.mari.MariActivity
-import com.queserasera.lostarkhomework.standard.CHARACTER_NAME
+import com.queserasera.lostarkhomework.standard.GAME_CHARACTER
 
 class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showHomework(character: GameCharacter) {
         val intent = Intent(baseContext, HomeworkActivity::class.java)
-        intent.putExtra(CHARACTER_NAME, character)
+        intent.putExtra(GAME_CHARACTER, character)
         startActivity(intent)
     }
 

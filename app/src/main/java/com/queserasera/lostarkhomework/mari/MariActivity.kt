@@ -22,6 +22,7 @@ class MariActivity : AppCompatActivity() {
         binding?.viewModel = viewModel
 
         binding?.arkMariList?.apply {
+            setHasFixedSize(true)
             adapter = mariAdapter
             layoutManager = LinearLayoutManager(context)
         }

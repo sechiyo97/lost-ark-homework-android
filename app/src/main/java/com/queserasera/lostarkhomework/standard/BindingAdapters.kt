@@ -13,7 +13,6 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("goneUnless")
     fun goneUnless(view: View, visible: Boolean?) {
-        println("visible? $visible")
         view.visibility = if (visible == true) View.VISIBLE else View.GONE
     }
 
