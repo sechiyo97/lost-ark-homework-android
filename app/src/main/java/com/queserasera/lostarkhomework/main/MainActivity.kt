@@ -1,6 +1,5 @@
 package com.queserasera.lostarkhomework.main
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +7,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.anjlab.android.iab.v3.BillingProcessor.IBillingHandler
-import com.anjlab.android.iab.v3.TransactionDetails
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.queserasera.lostarkhomework.Event
 import com.queserasera.lostarkhomework.R
+import com.queserasera.lostarkhomework.common.GameCharacter
 import com.queserasera.lostarkhomework.databinding.ActivityMainBinding
 import com.queserasera.lostarkhomework.homework.HomeworkActivity
 import com.queserasera.lostarkhomework.main.event.OnHomeworkClicked
@@ -35,10 +33,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
+        val character = GameCharacter("별으잉", 53)// TODO: 현재 어댐터에서 선택된 캐릭터를 전달
         viewModel.event.observe(this, Observer<Event>{
             when(it) {
                 OnMariClicked -> showMari()
-                OnHomeworkClicked -> showHomework("별으잉") // TODO: Character 클래스로 래핑하여 전달
+                OnHomeworkClicked -> showHomework(character)
             }
         })
     }
@@ -74,9 +73,9 @@ class MainActivity : AppCompatActivity() {
     private fun editName() =
         Toast.makeText(this, "Testing...", Toast.LENGTH_SHORT).show()
 
-    private fun showHomework(characterName: String) {
+    private fun showHomework(character: GameCharacter) {
         val intent = Intent(baseContext, HomeworkActivity::class.java)
-        intent.putExtra(CHARACTER_NAME, characterName)
+        intent.putExtra(CHARACTER_NAME, character)
         startActivity(intent)
     }
 
